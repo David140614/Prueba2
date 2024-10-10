@@ -1,0 +1,320 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E0F7FA; /* Azul clarito */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Encabezado */
+.header {
+    text-align: center;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #0288D1; /* Azul fuerte */
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+input, select {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #0288D1;
+}
+
+/* Botones */
+.btn {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.agendar {
+    background-color: #0288D1; /* Azul fuerte */
+    color: white;
+}
+
+.salir {
+    background-color: #FF5252; /* Rojo */
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+/* Disposición en dos columnas */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    width: 48%; /* Asegura que haya espacio entre los elementos */
+}
+
+.form-row button {
+    width: 48%; /* Botones también en dos columnas */
+}
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #0288d1;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 20px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #0277bd;
+    padding-left: 30px;
+    transition: all 0.3s ease;
+}
+.banner {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    width: 250px;
+}
+
+.banner img {
+    width: 100%;
+}
+.ad-space {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #FFF9C4; /* Amarillo pastel */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Estilos para pantallas móviles */
+@media (max-width: 600px) {
+    .container {
+        width: 90%; /* Se adapta al tamaño de la pantalla */
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input, select {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .form-row {
+        flex-direction: column; /* Las columnas se vuelven filas en pantallas pequeñas */
+    }
+
+    .form-group {
+        width: 100%; /* Ocupa todo el ancho */
+    }
+
+    .sidebar {
+        width: 100px; /* Reduce el tamaño de la barra lateral en dispositivos móviles */
+    }
+
+    .banner {
+        width: 150px; /* Reduce el tamaño del banner en móviles */
+    }
+
+    .ad-space {
+        font-size: 14px; /* Ajusta el tamaño de texto en la sección de anuncios */
+    }
+
+    .modal-content {
+        width: 95%; /* Asegura que el modal ocupe la mayor parte de la pantalla */
+    }
+}
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+}
+input, select, .btn {
+    margin-bottom: 10px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+/* Ajuste de margen para evitar que el contenido quede debajo de la barra lateral */
+.container {
+    margin-left: 220px; /* Da un margen igual al ancho de la barra */
+}
+ @media (max-width: 600px) {
+    /* Ajusta el tamaño y posición del anuncio en móviles */
+    .ad-space {
+        position: relative; /* Para que ya no se superponga */
+        width: 100%;
+        bottom: auto; /* Quita la posición fija al fondo */
+        margin-top: 20px; /* Espacio por debajo del contenido */
+    }
+
+    .banner {
+        width: 100%; /* Ajusta el banner para pantallas pequeñas */
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+}
+.container {
+    margin-left: 220px; /* Ajusta el margen para compensar la barra lateral */
+}
+@media (max-width: 600px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        margin-left: 0;
+    }
+
+    .ad-space {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .banner {
+        width: 100%;
+        margin-top: 20px;
+        position: static;
+    }
+}
+.container {
+    margin-top: 70px; /* Ajusta según sea necesario para evitar que se superpongan */
+}
+@media (min-width: 768px) {
+    .ad-space {
+        position: static;
+        margin-top: 20px; /* Añade un espacio entre el contenido y el anuncio */
+        width: 100%; /* Asegura que el anuncio ocupe el ancho disponible */
+    }
+
+    .container {
+        margin-bottom: 50px; /* Añade margen en la parte inferior del contenido para evitar superposición */
+    }
+
+
+
+
+
