@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de citas medicas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <style>
+        /* Estilos del modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed; /* Mantener el modal en la misma posición */
+            z-index: 1; /* Asegurarse de que el modal esté encima */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ancho completo */
+            height: 100%; /* Altura completa */
+            overflow: auto; /* Permitir el desplazamiento si es necesario */
+            background-color: rgb(0, 0, 0); /* Color de fondo negro */
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo con transparencia */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* Centrando el modal */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Ancho del modal */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#" onclick="abrirModalCitas()">Citas</a></li>
+            <li><a href="#" onclick="abrirModal()">Doctores</a></li>
+            <li><a href="#">Configuración</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="th.png" alt="Logo" class="logo">
+            <h1>Agenda tu cita</h1>
+        </div>
+        <form action="#" method="POST" class="form" onsubmit="return agendarCita(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre del Paciente:</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre del paciente" required>
+                </div>
+                <div class="form-group">
+                    <label for="doctor">Seleccionar Doctor:</label>
+                    <select id="doctor" name="doctor" required>
+                        <option value="Dr. Pérez">Dr. Pérez</option>
+                        <option value="Dr. García">Dr. García</option>
+                        <option value="Dr. Rodríguez">Dr. Rodríguez</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fecha">Seleccionar Fecha:</label>
+                    <input type="text" id="fecha" name="fecha" placeholder="Seleccionar fecha" required>
+                </div>
+                <div class="form-group">
+                    <label for="hora">Seleccionar Hora:</label>
+                    <select id="hora" name="hora" required>
+                        <option value="08:00">08:00 AM</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="15:00">03:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <button type="submit" class="btn agendar">Agendar Cita</button>
+                <button type="button" class="btn salir" onclick="salirAplicacion()">Salir</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal para mostrar la lista de doctores -->
+    <div id="modalDoctores" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <h2>Lista de Doctores</h2>
+        <ul>
+            <li>
+                <img src="dr_perez.jfif" alt="Dr. Pérez" width="100" height="100">
+                <p>Dr. Pérez - Especialidad: Cardiología</p>
+                <p>Años de experiencia: 15</p>
+                <p>Horarios disponibles: Lunes a Viernes, 8:00 AM - 4:00 PM</p>
+                <p>Calificación: ★★★★☆</p>
+                <button onclick="seleccionarDoctor('Dr. Pérez')">Seleccionar</button>
+            </li>
+            <li>
+                <img src="dr_garcia.jfif" alt="Dr. García" width="100" height="100">
+                <p>Dr. García - Especialidad: Dermatología</p>
+                <p>Años de experiencia: 10</p>
+                <p>Horarios disponibles: Martes a Sábado, 9:00 AM - 3:00 PM</p>
+                <p>Calificación: ★★★★☆</p>
+                <button onclick="seleccionarDoctor('Dr. García')">Seleccionar</button>
+            </li>
+            <li>
+                <img src="dr_rodriguez.jfif" alt="Dr. Rodríguez" width="100" height="100">
+                <p>Dr. Rodríguez - Especialidad: Pediatría</p>
+                <p>Años de experiencia: 12</p>
+                <p>Horarios disponibles: Lunes a Viernes, 10:00 AM - 6:00 PM</p>
+                <p>Calificación: ★★★★☆</p>
+                <button onclick="seleccionarDoctor('Dr. Rodríguez')">Seleccionar</button>
+            </li>
+        </ul>
+    </div>
+    </div>
+
+    <!-- Modal para gestionar citas -->
+<div id="modalCitas" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModalCitas()">&times;</span>
+        <h2>Gestión de Citas</h2>
+        <div>
+            <h3>Citas Agendadas</h3>
+            <ul id="listaCitas">
+                <!-- Aquí se llenarán las citas agendadas -->
+            </ul>
+        </div>
+        <!-- Mensajes de éxito o error -->
+        <div id="mensajeCitas" style="display: none;"></div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Inicializar el calendario en el campo de fecha
+        flatpickr("#fecha", {
+            dateFormat: "d/m/Y", // Formato de fecha DD/MM/YYYY
+            minDate: "today",    // Evita seleccionar fechas pasadas
+        });
+
+        // Lista de citas ya ocupadas (simulación)
+        const citasOcupadas = [
+            { fecha: '25/09/2024', hora: '10:00' },
+            { fecha: '25/09/2024', hora: '12:00' },
+            { fecha: '26/09/2024', hora: '09:00' },
+            { fecha: '27/09/2024', hora: '11:00' },
+        ];
+
+        function salirAplicacion() {
+            alert("Saliendo de la aplicación...");
+            window.close(); // Solo funciona en algunos navegadores
+        }
+        function seleccionarDoctor(nombreDoctor) {
+        document.getElementById("doctor").value = nombreDoctor;
+        cerrarModal(); // Cierra el modal después de seleccionar al doctor
+        }
+
+
+        function verificarDisponibilidad(fecha, hora) {
+            // Verifica si la fecha y hora seleccionadas ya están ocupadas
+            return citasOcupadas.some(cita => cita.fecha === fecha && cita.hora === hora);
+        }
+
+        function agendarCita(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
+
+            // Obtener los datos del formulario
+            const nombre = document.getElementById("nombre").value;
+            const doctor = document.getElementById("doctor").value;
+            const fecha = document.getElementById("fecha").value;
+            const hora = document.getElementById("hora").value;
+
+            // Verificar si la fecha y hora ya están ocupadas
+            if (verificarDisponibilidad(fecha, hora)) {
+                alert("La fecha y hora seleccionadas ya están ocupadas. Por favor, elija otro horario.");
+                return; // Detener el proceso de agendar la cita
+            }
+
+            if (nombre && doctor && fecha && hora) {
+                // Generar datos para el QR
+                const datosPaciente = `Nombre: ${nombre}\nDoctor: ${doctor.replace("_", " ")}\nFecha: ${fecha}\nHora: ${hora}`;
+
+                // Crear el código QR
+                const qrValue = new QRious({
+                    value: datosPaciente
+                }).toDataURL();
+
+                // Abrir nueva ventana para mostrar el mensaje de confirmación
+                const nuevaVentana = window.open("", "_blank", "width=500,height=500,top=100,left=400");
+                nuevaVentana.document.write(`
+                    <html>
+                    <head>
+                        <title>Cita Agendada</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+                            .success { color: green; font-size: 20px; font-weight: bold; }
+                            button { 
+                                padding: 10px 20px; 
+                                background-color: #2196F3; /* Color de fondo azul */
+                                color: white; /* Color del texto blanco */
+                                border: none; 
+                                cursor: pointer; 
+                                border-radius: 5px; /* Bordes redondeados */
+                                margin-top: 20px; /* Espacio superior */
+                            }
+                            button:hover {
+                                background-color: #0b7dda; /* Color de fondo más oscuro cuando se pasa el mouse */
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <p class="success">¡La cita ha sido agendada con éxito!</p>
+                        <p>Nombre del Paciente: ${nombre}</p>
+                        <p>Doctor: ${doctor.replace("_", " ")}</p>
+                        <p>Fecha: ${fecha}</p>
+                        <p>Hora: ${hora}</p>
+                        <h3>Su Código QR:</h3>
+                        <img src="${qrValue}" alt="Código QR" style="margin: 20px 0;">
+                        <p>Muéstrelo al llegar a su cita.</p>
+                        <button onclick="window.close()">Salir</button>
+                    </body>
+                    </html>
+                `);
+            } else {
+                alert("Por favor, complete todos los campos antes de agendar la cita.");
+            }
+        }
+
+        function abrirModal() {
+            document.getElementById("modalDoctores").style.display = "block";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modalDoctores").style.display = "none";
+        }
+
+        // Cerrar el modal cuando se hace clic fuera del contenido del modal
+        window.onclick = function(event) {
+            const modal = document.getElementById("modalDoctores");
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        // Arreglo de citas simuladas
+const citas = [
+    { nombre: "Juan Pérez", doctor: "Dr. García", fecha: "2024-10-05", hora: "10:00 AM" },
+    { nombre: "Ana López", doctor: "Dr. Rodríguez", fecha: "2024-10-06", hora: "11:30 AM" },
+    { nombre: "Carlos Martínez", doctor: "Dr. Pérez", fecha: "2024-10-07", hora: "02:00 PM" }
+];
+
+// Función para cargar citas en la lista al abrir el modal
+function cargarCitas() {
+    const listaCitas = document.getElementById("listaCitas");
+    listaCitas.innerHTML = ""; // Limpiar lista antes de cargar
+    citas.forEach((cita, index) => {
+        const elementoCita = document.createElement("li");
+        elementoCita.textContent = `${cita.nombre} - ${cita.doctor} - ${cita.fecha} ${cita.hora}`;
+        
+        // Botón para cancelar cita
+        const botonCancelar = document.createElement("button");
+        botonCancelar.textContent = "Cancelar";
+        botonCancelar.onclick = function() {
+            cancelarCita(index);
+        };
+
+        // Botón para editar cita
+        const botonEditar = document.createElement("button");
+        botonEditar.textContent = "Editar";
+        botonEditar.onclick = function() {
+            editarCita(index);
+        };
+
+        elementoCita.appendChild(botonCancelar);
+        elementoCita.appendChild(botonEditar);
+        listaCitas.appendChild(elementoCita);
+    });
+}
+
+// Función para cancelar una cita
+function cancelarCita(index) {
+    citas.splice(index, 1); // Eliminar la cita del arreglo
+    cargarCitas(); // Recargar la lista de citas
+    mostrarMensaje("Cita cancelada exitosamente.", "exito");
+}
+
+// Función para editar una cita
+function editarCita(index) {
+    const nuevaFecha = prompt("Ingrese la nueva fecha (YYYY-MM-DD):", citas[index].fecha);
+    const nuevaHora = prompt("Ingrese la nueva hora (HH:MM AM/PM):", citas[index].hora);
+
+    if (nuevaFecha && nuevaHora) {
+        citas[index].fecha = nuevaFecha;
+        citas[index].hora = nuevaHora;
+        cargarCitas(); // Recargar la lista con la cita editada
+        mostrarMensaje("Cita editada exitosamente.", "exito");
+    } else {
+        mostrarMensaje("Edición cancelada o datos inválidos.", "error");
+    }
+}
+
+// Función para mostrar mensajes de éxito o error
+function mostrarMensaje(mensaje, tipo) {
+    const mensajeCitas = document.getElementById("mensajeCitas");
+    mensajeCitas.textContent = mensaje;
+    
+    if (tipo === "exito") {
+        mensajeCitas.style.color = "green";
+    } else if (tipo === "error") {
+        mensajeCitas.style.color = "red";
+    }
+    
+    mensajeCitas.style.display = "block";
+    setTimeout(() => {
+        mensajeCitas.style.display = "none";
+    }, 3000); // Ocultar después de 3 segundos
+}
+function abrirModalCitas() {
+    document.getElementById("modalCitas").style.display = "block";
+    cargarCitas(); // Cargar la lista de citas cuando se abre el modal
+}
+// Función para cerrar el modal de citas
+function cerrarModalCitas() {
+    document.getElementById("modalCitas").style.display = "none";
+}
+
+
+        };
+    </script>
+
+    <div class="banner">
+        <img src="banner_lateral.avif" alt="Banner Lateral">
+    </div>
+    <div class="ad-space">
+        <p>¡Descuento especial en consultas para nuevos pacientes!</p>
+    </div>
+</body>
+</html>
