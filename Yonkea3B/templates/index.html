@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Yonkea3B - Venta y Compra de Autopartes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Vincula tu archivo CSS aquí -->
+</head>
+<body>
+
+  <!-- Cabecera de la Plataforma -->
+  <header>
+    <div class="logo">
+      <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Logo de Yonkea3B" class="logo-img">
+      Yonkea3B
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Inicio</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#contacto" id="contactoBtn">Contacto</a></li>
+        <li><a href="#" onclick="mostrarRegistro()">Registrar</a></li>
+        <li><a href="#" onclick="mostrarLogin()">Login</a></li>
+        <li><a href="#" onclick="mostrarVender()">Vender</a></li> <!-- Botón Vender -->
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Sección Hero (Inicio) -->
+  <section class="hero" id="home">
+    <img src="{{ url_for('static', filename='fondo2.jpg') }}" alt="Imagen de fondo" class="hero-bg"> <!-- Imagen de fondo -->
+    <!-- Contenedor con fondo blanco semitransparente -->
+    <div class="hero-content">
+      <h2>Bienvenido a Yonkea3B</h2>
+      <p>Si tu auto quieres rodar, en Yonkea3B debes buscar.</p>
+    </div>
+  </section>
+
+  <!-- Barra de Búsqueda de Productos -->
+  <section class="busqueda-productos" id="busqueda">
+    <h2>Busca tu pieza</h2>
+    <form id="searchForm">
+      <input type="text" id="searchInput" placeholder="Buscar productos..." />
+      <button type="submit">Buscar</button>
+    </form>
+  </section>
+
+  <!-- Sección Productos -->
+  <section id="productos">
+    <h2>Productos Disponibles</h2>
+    <div class="productos-lista" id="productosLista">
+      <div class="producto">
+        <img src="{{ url_for('static', filename='pieza1.jpg') }}" alt="Alternador usado">
+        <h3>Alternador usado</h3>
+        <p>Precio: $150</p>
+        <button>Comprar</button>
+      </div>
+      <div class="producto">
+        <img src="{{ url_for('static', filename='pieza2.jpg') }}" alt="Frenos de disco">
+        <h3>Frenos de disco</h3>
+        <p>Precio: $80</p>
+        <button>Comprar</button>
+      </div>
+      <!-- Más productos aquí -->
+    </div>
+  </section>
+  <section id="productos">
+    
+    <div class="productos-lista" id="productosLista">
+        {% for producto in productos %}
+        <div class="producto">
+            <img src="{{ url_for('static', filename='uploads/' + producto['imagen_producto']) }}" alt="{{ producto['nombre_producto'] }}">
+            <h3>{{ producto['nombre_producto'] }}</h3>
+            <p>{{ producto['descripcion_producto'] }}</p>
+            <p>Precio: ${{ producto['precio_producto'] }}</p>  <!-- Agrega un campo de precio si lo tienes en la base de datos -->
+            <button>Comprar</button>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Modal de Registro -->
+<div id="registro-modal" class="modal registro-modal" style="display: none;">
+  <div class="registro-contenido">
+    <span class="cerrar" onclick="cerrarRegistro()">&times;</span>
+    <h2>Registro de Usuario</h2>
+    <form action="/register" method="POST"> <!-- Cambié el action aquí -->
+      <!-- Label para el campo Nombre -->
+      <label for="nombre">Nombre</label>
+      <input type="text" name="nombre" required>
+
+      <!-- Label para el campo Email -->
+      <label for="email">Correo Electrónico</label>
+      <input type="email" name="email" required>
+
+      <!-- Label para el campo Contraseña -->
+      <label for="password">Contraseña</label>
+      <input type="password" name="password" required>
+
+      <!-- Botón de submit -->
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- Modal de Contacto -->
+  <div id="contactoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeContactoModal">&times;</span>
+      <h2>Contacto con Administrador</h2>
+      <p>Teléfono: 123-456-7890</p>
+      <p>Email: contacto@Yonkea3B.com</p>
+    </div>
+  </div>
+<!-- Modal de Login -->
+<div id="login-modal" class="modal" style="display: none;">
+  <div class="login-contenido">
+    <span class="close" onclick="cerrarModal('login-modal')">&times;</span>
+    <h2>Login</h2>
+    <form action="/login" method="post">
+      <label for="email">Correo Electrónico</label>
+      <input type="email" name="email" required>
+      <label for="password">Contraseña</label>
+      <input type="password" name="password" required>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+  </div>
+</div>
+
+<!-- Modal de Vender -->
+<div id="vender-modal" class="modal" style="display: none;">
+  <div class="vender-contenido">
+    <span class="close" onclick="cerrarModal('vender-modal')">&times;</span>
+    <h2>Publicar Producto</h2>
+    <form action="/" method="post" enctype="multipart/form-data">
+      <label for="nombre_producto">Nombre del Producto</label>
+      <input type="text" name="nombre_producto" required>
+      <label for="descripcion_producto">Descripción</label>
+      <textarea name="descripcion_producto" required></textarea>
+      <!-- Label para el precio del producto -->
+      <label for="precio_producto">Precio</label>
+      <input type="number" name="precio_producto" step="0.01" min="0" required>
+      <label for="imagen_producto">Imagen del Producto</label>
+      <input type="file" name="imagen_producto" required>
+      <button type="submit">Publicar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Sección de Anuncios -->
+<section id="anuncios">
+  <div class="anuncio">
+    <img src="{{ url_for('static', filename='anuncio1.jpg') }}" alt="Anuncio 1" class="anuncio-img">
+    <div class="anuncio-texto">
+      <h3>¡Gran Oferta en Autopartes!</h3>
+      <p>Compra ahora y recibe un descuento del 40% en tu primera compra. ¡No te lo pierdas!</p>
+    </div>
+  </div>
+  
+  <div class="anuncio">
+    <img src="{{ url_for('static', filename='anuncio2.jpg') }}" alt="Anuncio 2" class="anuncio-img">
+    <div class="anuncio-texto">
+      <h3>¡Gran Oferta en Aceites!</h3>
+      <p>Compra tus aceites de cualquier tipo y recibe ofertas especiales</p>
+    </div>
+  </div>
+</section>
+
+  <!-- Pie de Página -->
+  <footer>
+    <p>&copy; 2024 Yonkea3B. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Mostrar el modal de contacto al hacer clic en "Contacto"
+    const modalContacto = document.getElementById("contactoModal");
+    const btnContacto = document.getElementById("contactoBtn");
+    const spanContacto = document.getElementById("closeContactoModal");
+
+    btnContacto.onclick = function() {
+      modalContacto.style.display = "block";
+    }
+
+    spanContacto.onclick = function() {
+      modalContacto.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modalContacto) {
+        modalContacto.style.display = "none";
+      }
+    }
+
+  // Mostrar el modal de registro al hacer clic en "Registrarse"
+function mostrarRegistro() {
+  document.getElementById('registro-modal').style.display = 'block';
+}
+
+// Función para cerrar el modal de registro
+function cerrarRegistro() {
+  document.getElementById('registro-modal').style.display = 'none';
+}
+function mostrarLogin() {
+      document.getElementById('login-modal').style.display = 'block';
+    }
+
+    function mostrarVender() {
+      document.getElementById('vender-modal').style.display = 'block';
+    }
+
+    function cerrarModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+// Cerrar modal de contacto
+window.onclick = function(event) {
+  var modalContacto = document.getElementById("contactoModal");
+  var modalRegistro = document.getElementById("registro-modal");
+
+  if (event.target == modalContacto) {
+    modalContacto.style.display = "none";
+  }
+
+  if (event.target == modalRegistro) {
+    modalRegistro.style.display = "none";
+  }
+}
+
+    // Funcionalidad de búsqueda de productos
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const productosLista = document.getElementById("productosLista");
+
+    searchForm.addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevenir el envío del formulario
+
+      const searchTerm = searchInput.value.toLowerCase();
+      const productos = productosLista.getElementsByClassName("producto");
+
+      for (let i = 0; i < productos.length; i++) {
+        const producto = productos[i];
+        const nombreProducto = producto.querySelector("h3").textContent.toLowerCase();
+
+        if (nombreProducto.includes(searchTerm)) {
+          producto.style.display = "block";
+        } else {
+          producto.style.display = "none";
+        }
+      }
+    });
+  </script>
+{% if mensaje %}
+<p style="color: green;">{{ mensaje }}</p>
+{% endif %}
+
+</body>
+</html>

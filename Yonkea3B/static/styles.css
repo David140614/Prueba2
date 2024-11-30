@@ -1,0 +1,646 @@
+/* Reset de márgenes y padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos Globales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fa; /* Gris claro */
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Cabecera */
+header {
+  background-color: #fff; /* Fondo blanco */
+  color: #333;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+}
+
+header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff; /* Color similar al de Mercado Libre */
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex; /* Utilizamos flex para alinear el logo e imagen */
+  align-items: center; /* Centra el contenido verticalmente */
+}
+header .logo .logo-img {
+  width: 100px; /* Ajusta el tamaño del logo según lo necesites */
+  height: auto;
+  margin-right: 5px; /* Espacio entre la imagen y el texto */
+}
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #0056b3; /* Color más oscuro al hacer hover */
+}
+
+/* Sección Hero (Inicio) */
+.hero {
+  
+  position: relative;
+  color: rgb(10, 33, 180);
+  text-align: center;
+  padding: 80px 20px;
+  overflow: hidden; /* Evita que el contenido se desborde fuera de la sección */
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra toda la sección */
+  z-index: -1; /* Coloca la imagen detrás del contenido */
+}
+
+/* Contenedor con fondo blanco semitransparente */
+.hero-content {
+  position: relative;
+  z-index: 1; /* Asegura que el texto esté por encima de la imagen */
+  background-color: rgba(255, 255, 255, 0.7); /* Fondo blanco con 70% de opacidad */
+  padding: 30px;
+  border-radius: 10px; /* Bordes redondeados para un efecto más suave */
+  display: inline-block; /* Para que el contenido no ocupe todo el ancho */
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Barra de Búsqueda de Productos */
+.busqueda-productos {
+  background-color: #f5f5f5; /* Gris muy claro */
+  padding: 20px 10px;
+  text-align: center;
+}
+
+#searchForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#searchInput {
+  padding: 12px;
+  font-size: 1.2rem;
+  width: 85%;
+  border: none;
+  border-radius: 50px;
+  box-shadow: none;
+  outline: none;
+  margin-right: 10px;
+}
+
+#searchInput:focus {
+  border: 2px solid #007bff;
+}
+
+#searchForm button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#searchForm button:hover {
+  background-color: #0056b3;
+}
+
+/* Sección Productos */
+#productos {
+  padding: 40px 20px;
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+#productos h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.productos-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+}
+
+.producto {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.producto:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.producto img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.producto:hover img {
+  transform: scale(1.05);
+}
+
+.producto h3 {
+  font-size: 1.5rem;
+  margin: 15px 10px;
+  color: #333;
+}
+
+.producto p {
+  font-size: 1.1rem;
+  margin: 10px 10px;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.producto button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.producto button:hover {
+  background-color: #218838;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #007bff;
+}
+
+/* Pie de Página */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  header {
+    padding: 10px 20px;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  #searchForm {
+    width: 100%;
+  }
+
+  .productos-lista {
+    grid-template-columns: 1fr; /* Productos en una columna */
+  }
+
+  .producto {
+    margin: 0 10px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+}
+/* Modal de Registro */
+.registro-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);  /* Fondo oscuro más denso */
+}
+
+.registro-contenido {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal de Contacto */
+.contacto-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);  /* Fondo menos denso */
+}
+
+.contacto-modal .modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para cerrar los modales */
+.registro-modal .cerrar {
+  font-size: 30px;
+  color: #aaa;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.contacto-modal .close {
+  font-size: 30px;
+  color: #aaa;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.close:hover,
+.cerrar:hover {
+  color: #007bff;
+}
+/* Modal más pequeño en pantallas pequeñas */
+@media (max-width: 768px) {
+  .registro-modal .modal-content,
+  .contacto-modal .modal-content {
+    width: 80%;  /* Ajustar el tamaño del modal para pantallas pequeñas */
+  }
+
+  .registro-modal .cerrar,
+  .contacto-modal .close {
+    font-size: 24px;  /* Reducir el tamaño del ícono de cerrar */
+  }
+}
+/* Botón de registro dentro del modal */
+.registro-contenido button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.registro-contenido button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+/* Estilo de las labels dentro del modal */
+.registro-contenido label {
+  display: block;
+  font-size: 1.2rem;  /* Tamaño de fuente para las labels */
+  color: #333;
+  margin-bottom: 8px;  /* Separación entre la label y el campo de entrada */
+  font-weight: bold;   /* Hacer las labels más destacadas */
+}
+
+/* Estilo para los campos de entrada dentro del modal */
+.registro-contenido input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Espacio entre los campos */
+  box-sizing: border-box; /* Asegura que el padding no afecte al ancho */
+  background-color: #fafafa; /* Color de fondo para los campos */
+}
+
+.registro-contenido input:focus {
+  border-color: #007bff;  /* Color de borde al hacer foco en el campo */
+  background-color: #fff;  /* Fondo blanco cuando se hace foco */
+}
+
+/* Estilo para el botón de registro */
+.registro-contenido button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.registro-contenido button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+/* Modal de Login */
+.login-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro más denso */
+}
+
+.login-contenido {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-contenido label {
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.login-contenido input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+}
+
+.login-contenido input:focus {
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.login-contenido button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-contenido button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el botón cerrar */
+.login-modal .cerrar {
+  font-size: 30px;
+  color: #aaa;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.login-modal .cerrar:hover {
+  color: #007bff;
+}
+
+/* Modal de Vender */
+.vender-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro más denso */
+}
+
+.vender-contenido {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vender-contenido label {
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.vender-contenido input,
+.vender-contenido textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+}
+
+.vender-contenido input:focus,
+.vender-contenido textarea:focus {
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.vender-contenido button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.vender-contenido button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para el botón cerrar */
+.vender-modal .cerrar {
+  font-size: 30px;
+  color: #aaa;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.vender-modal .cerrar:hover {
+  color: #007bff;
+}
+
+/* Sección de Anuncios */
+#anuncios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f5f5f5;  /* Fondo gris claro para los anuncios */
+  margin-top: 30px;  /* Separación del pie de página */
+}
+
+/* Estilos para cada anuncio */
+.anuncio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(183, 176, 176);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.anuncio-img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.anuncio-texto {
+  margin-left: 20px;
+  max-width: 70%;
+}
+
+.anuncio-texto h3 {
+  font-size: 1.6rem;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.anuncio-texto p {
+  font-size: 1rem;
+  color: #333;
+}
+
